@@ -18,6 +18,18 @@ int main (int argc, char *argv[]) {
 
   PGMfile in = read_infile(argv[1]);
   PGMfile out = in;
+
+  // Allocate space for the output image
+  out.pix = pgm_allocarray(out.width, out.height);
+
+
+  for (int i = 0; i < in.height; ++i) {
+    for (int j = 0; j < in.width; ++j) {
+      // Flip it
+      out.pix[out.height - i][out.width - j] = in.pix[i][j];
+    }
+  }
+
   write_outfile(argv[2], out);
 
   return 0;

@@ -10,8 +10,8 @@ typedef struct pgm {
    */
 
   FILE * file;
-  int cols;
-  int rows;
+  int width;
+  int height;
   gray maxval;
 
   /* Stores the actual image.

@@ -15,6 +15,10 @@ int main (int argc, char *argv[]) {
     print_usage();
     return 1;
   }
-    
+
+  PGMfile in = read_infile(argv[1]);
+  PGMfile out = in;
+  write_outfile(argv[2], out);
+
   return 0;
 }

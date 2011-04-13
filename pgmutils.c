@@ -1,5 +1,6 @@
 #include <stdio.h>
+#include <pgm.h>
 
-void print_usage(char *prog_name) {
-  printf("usage: %s infile outfile\n", prog_name);
+void print_usage(void) {
+  pm_usage("infile outfile\n");
 }

@@ -1,1 +1,1 @@
-void print_usage(char *prog_name);
+void print_usage(void);

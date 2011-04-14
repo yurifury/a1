@@ -1,4 +1,4 @@
-out=out.pgm
+out=output/out.pgm
 in=student_samples/sample_image_01.pgm
 
 make all

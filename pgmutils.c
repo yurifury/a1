@@ -17,3 +17,4 @@ void write_outfile(char * file_name, PGMfile out) {
   out.file = pm_openw(file_name);
   pgm_writepgm(out.file, out.pix, out.width, out.height, out.maxval, pm_plain_output);
 }
+

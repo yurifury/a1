@@ -52,8 +52,16 @@ bool valid_pixel(PGMfile file, int y, int x) {
 }
 
 void blur_pixel(PGMfile file, int y, int x, double matrix[MSIZE][MSIZE]) {
+  // Matrix transformation values
   double weighted_sum = 0;
   double sum_of_weights = 0;
+
+  /* Iterate through the convolution matrix.
+   * We look at the pixels offset from the center x y pixel
+   * If it's a valid pixel, we calculate the weighted sum for that point.
+   * We also put the matrix value into sum_of_weights to divide by later.
+   * Note that we don't do anything with invalid pixels
+   */
   for (int mi = 0, i = y - HALFM; mi < MSIZE - 1; ++mi, ++i) {
     for (int mj = 0, j = x - HALFM; mj < MSIZE - 1; ++mj, ++j) {
       if (valid_pixel(file, i, j)) {
@@ -62,6 +70,14 @@ void blur_pixel(PGMfile file, int y, int x, double matrix[MSIZE][MSIZE]) {
       }
     }
   }
+
+  // Now we have all the needed values, apply the blur to the pixel
   double blurred_pix_val = (weighted_sum / sum_of_weights);
+
+  // Buuuuuuuuuut, bound the brightness to maxval
+  if (blurred_pix_val > file.maxval)
+    blurred_pix_val = file.maxval;
+  printf("%f\n", blurred_pix_val);
+
   file.pix[y][x] = blurred_pix_val;
 }

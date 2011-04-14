@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <assert.h>
 #include <pgm.h>
 #include "pgmutils.h"
 
@@ -25,7 +24,7 @@ int main (int argc, char *argv[]) {
 
   for (int i = 0; i < in.height; ++i) {
     for (int j = 0; j < in.width; ++j) {
-      // Flip it
+      // Rotate it
       out.pix[out.height - i][out.width - j] = in.pix[i][j];
     }
   }

@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+if [ $# -eq "2" ]; then
+  pamgauss 7 7 -sigma=2 -tupletype=GRAYSCALE | pamtopnm > gauss.pgm
+  pnmconvol -nooffset gauss.pgm $1 > $2
+  rm gauss.pgm
+else
+  echo "usage: pgmblur infile outfile"
+fi

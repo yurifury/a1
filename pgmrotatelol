@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+if [ $# -eq "2" ]; then
+  pamflip -rotate180 $1 > $2
+else
+  echo "usage: pgmrotate infile outfile"
+fi

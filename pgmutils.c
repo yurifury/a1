@@ -9,6 +9,7 @@ PGMfile read_infile(char * file_name) {
 
   in.file = pm_openr(file_name);
   in.pix = pgm_readpgm(in.file, &in.width, &in.height, &in.maxval);
+  pm_close(in.file);
 
   return in;
 }
@@ -16,5 +17,9 @@ PGMfile read_infile(char * file_name) {
 void write_outfile(char * file_name, PGMfile out) {
   out.file = pm_openw(file_name);
   pgm_writepgm(out.file, out.pix, out.width, out.height, out.maxval, pm_plain_output);
+  pm_close(out.file);
 }
 
+void free_pgm(PGMfile pgm) {
+  pgm_freearray(pgm.pix, pgm.height);
+}

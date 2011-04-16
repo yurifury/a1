@@ -24,6 +24,6 @@ typedef struct pgm {
 void print_usage(void);
 PGMfile read_infile(char * file_name);
 void write_outfile(char * file_name, PGMfile out);
-
+void free_pgm(PGMfile pgm);
 
 #endif

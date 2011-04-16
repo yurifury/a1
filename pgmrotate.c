@@ -21,15 +21,17 @@ int main (int argc, char *argv[]) {
   // Allocate space for the output image
   out.pix = pgm_allocarray(out.width, out.height);
 
-
-  for (int i = 0; i < in.height; ++i) {
-    for (int j = 0; j < in.width; ++j) {
+  for (int i = 1; i <= in.height; ++i) {
+    for (int j = 1; j <= in.width; ++j) {
       // Rotate it
-      out.pix[out.height - i][out.width - j] = in.pix[i][j];
+      out.pix[out.height - i][out.width - j] = in.pix[i-1][j-1];
     }
   }
 
   write_outfile(argv[2], out);
+
+  free_pgm(in);
+  free_pgm(out);
 
   return 0;
 }

@@ -42,11 +42,13 @@ int main (int argc, char *argv[]) {
 
   write_outfile(argv[2], out);
 
+  free_pgm(in);
+
   return 0;
 }
 
 bool valid_pixel(PGMfile file, int y, int x) {
-  if (y <= file.height && y >= 0 && x <= file.width & x >= 0)
+  if (y < file.height && y >= 0 && x < file.width & x >= 0)
     return true;
   return false;
 }

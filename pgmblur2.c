@@ -43,7 +43,7 @@ int main (int argc, char *argv[]) {
   PGMfile out = in;
 
   gray *shared_img;
-  shared_img = mmap(NULL, sizeof(gray) * in.height * in.width, PROT_READ|PROT_WRITE, MAP_SHARED|MAP_ANON, -1, 0);
+  shared_img = mmap(NULL, sizeof(gray) * in.height * in.width, PROT_READ|PROT_WRITE, MAP_SHARED|MAP_ANONYMOUS, -1, 0);
 
   if (fork()) {
     wait(0);
@@ -93,7 +93,7 @@ gray ** gray_1D_to_2D(gray * pix1D, int width, int height) {
 }
 
 bool valid_pixel(int width, int height, int y, int x) {
-  if (y < height && y >= 0 && x < width & x >= 0)
+  if (y < height && y >= 0 && x < width && x >= 0)
     return true;
   return false;
 }

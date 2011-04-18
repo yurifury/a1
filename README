@@ -1,0 +1,30 @@
+22597964
+Yuri Feldman
+yfel1
+
+3042 Assignment 1
+Finished all stages. (I think)
+Included pgmrotate and pgmblur in shell scripts to demonstrate equivalent programs without writing new code.
+Tested all binaries with valgrind, no memory leaks/unfreed memory.
+
+Used K&R (1TBS) with 2 space indents
+Used as much code (except pm_fork) from the pam/pgm utilities as possible, binaries should run with --version, --plain, etc options that the Netpbm programs have.
+
+BENCHMARK
+Machine: Macbook Air 13"
+File: student_samples/sample_image_02.pgm
+Average time for pgmblur: 0.33 seconds
+Average time for pgmblur2: 0.25 seconds
+
+delta: 0.07 seconds
+percentage: 24% decrease from pgmblur to pgmblur2
+
+(Average time calculated from 20 runs of the program, using the time UNIX utility)
+
+The way I split the work up between two processes was by reformatting the 2D pixel array of grays into a 1D pixel array with indicies of [y*width + x]. Then I had the child process calculate the second half of the image to blur, and then the parent would calculate the first half of the image. The 1D array would then be converted back into a 2D pixel map, and written to the output file.
+
+The performance increase is fairly negligible. This is because I wait for the child process to finish before I do the calculations in the parent process. This is not ideal, and doesn't give the speedup as it would if it actually worked asynchronously. However, this still splits the processing over two UNIX processes, which was asked for.
+
+I got a 30% increase in speed when I didn't wait for the child process to finish before calculating the parent's share of the work, but I experienced issues with correctly syncing all rows between the processes. This makes sense, as the calculations were performed asynchonously.
+
+If the asynchronous code were to work properly, spreaking it among more processors would give a fairly linear speed increase, up to a constant bound (the cost to do all the other stuff, like opening and writing files.)

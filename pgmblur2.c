@@ -3,6 +3,7 @@
 #include <pgm.h>
 
 #include <sys/mman.h>
+#include <sys/wait.h>
 #include <unistd.h>
 #include "pgmutils.h"
 
@@ -48,7 +49,10 @@ int main (int argc, char *argv[]) {
   shared_img = mmap(NULL, sizeof(gray) * in.height * in.width, PROT_READ|PROT_WRITE, MAP_SHARED|MAP_ANONYMOUS, -1, 0);
 
   if (fork()) {
+    // Wait for child process to finish
     wait(0);
+    
+    // Do second half of the blur
     for (int i = in.height / 2; i < in.height; ++i) {
       for (int j = 0; j < in.width; ++j) {
         blur_pixel(shared_img, in.width, in.height, in.maxval, i, j, convolutionM);
@@ -70,11 +74,14 @@ int main (int argc, char *argv[]) {
       }
     }
 
+    // Do the first half of the image
     for (int i = 0; i < in.height / 2; ++i) {
       for (int j = 0; j < in.width; ++j) {
         blur_pixel(shared_img, in.width, in.height, in.maxval, i, j, convolutionM);
       }
     }
+
+    // Sync the shared memory
     msync(shared_img, sizeof(gray) * in.height * in.width, MS_SYNC);
     munmap(shared_img, sizeof(gray) * in.height * in.width);
     free_pgm(in);

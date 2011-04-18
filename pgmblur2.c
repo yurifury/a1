@@ -6,6 +6,10 @@
 #include <unistd.h>
 #include "pgmutils.h"
 
+#ifndef __APPLE__
+#define MAP_ANONYMOUS MAP_ANON
+#endif
+
 #define MSIZE 7
 #define HALFM ((MSIZE / 2) + 1)
 gray ** gray_1D_to_2D(gray * pix1D, int width, int height);

@@ -1,6 +1,8 @@
-FLAGS := -std=c99 -Wall
+FLAGS := -std=gnu99 -Wall
 
 all: pgmrotate pgmblur pgmblur2
+
+clobber: clean
 
 pgmrotate: pgmrotate.c pgmutils.c
 	gcc pgmrotate.c pgmutils.c $(FLAGS) -o pgmrotate -lnetpbm
@@ -13,3 +15,7 @@ pgmblur2: pgmblur2.c pgmutils.c
 
 clean:
 	rm -f pgmrotate pgmblur pgmblur2
+
+dist:
+	make clobber
+	tar czvf ../3042_assignment1.tgz *.c *.h README Makefile

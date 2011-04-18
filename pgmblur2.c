@@ -6,8 +6,10 @@
 #include <unistd.h>
 #include "pgmutils.h"
 
-#ifndef __APPLE__
+#ifndef MAP_ANONYMOUS
+#ifdef MAP_ANON
 #define MAP_ANONYMOUS MAP_ANON
+#endif
 #endif
 
 #define MSIZE 7
